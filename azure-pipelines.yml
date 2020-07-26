@@ -10,7 +10,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  rootDir: 'my-app'
+  rootDir: 'msa_assigment_api'
   buildDir: '$(rootDir)/build'
 
 steps:
