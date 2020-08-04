@@ -4,37 +4,38 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+  - master
+  - develop
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 variables:
-  rootDir: 'msa_assigment_api'
-  buildDir: '$(rootDir)/build'
+  rootDir: "msa_assigment_api"
+  buildDir: "$(rootDir)/build"
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x' 
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "10.x"
+    displayName: "Install Node.js"
 
-- script: |
-   cd $(rootDir)
-   npm install
-   npm run build
-   cd ..
-  displayName: 'npm install and build'  
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(buildDir)'
-    includeRootFolder: false
-    archiveType: 'zip'
-    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
-    replaceExistingArchive: true
+  - script: |
+      cd $(rootDir)
+      npm install
+      npm run build
+      cd ..
+    displayName: "npm install and build"
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: "$(buildDir)"
+      includeRootFolder: false
+      archiveType: "zip"
+      archiveFile: "$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip"
+      replaceExistingArchive: true
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+      ArtifactName: "drop"
+      publishLocation: "Container"
